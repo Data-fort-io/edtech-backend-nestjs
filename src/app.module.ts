@@ -19,13 +19,26 @@ import { UsersModule } from './users/users.module';
   imports: [TypeOrmModule.forRootAsync({
     useFactory: ()=>({
       type: "postgres",
-      autoLoadEntities: true,
+      autoLoadEntities: false,
       synchronize: true,
       host: "localhost",
       port: 5342,
       username: "postgres",
       password: "postgres",
-      database: "edtech"
+      database: "edtech_db",
+
+      entities: [
+        Users,
+        Resourses,
+        Profiles,
+        Recordings,
+        Notifications,
+        Leadership_boards,
+        Enrollments,
+        Courses,
+        Assessments,
+        Assessments_submissions
+      ],
     })
   
   }), UsersModule],

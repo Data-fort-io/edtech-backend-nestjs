@@ -1,28 +1,37 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Courses } from './courses.entity';
 
 @Entity()
-export class Recordings{
-    @PrimaryGeneratedColumn()
-    id: Number
+export class Recordings {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({
-        type: "varchar",
-        nullable: false,
-    })
-    url: string
+  @Column({
+    type: 'varchar',
+    nullable: false,
+  })
+  url: string;
 
-    @Column({
-        type: 'number',
-        nullable: false
-    })
-    duration: number
+  @Column({
+    type: 'integer',
+    nullable: false,
+  })
+  duration: number;
 
-    // a one to one relationship with the course recorded
+  //Established a one to one relationship with the course recorded
+  @ManyToOne(() => Courses, (course) => course.record)
+  course: Courses;
 
-    
-    @CreateDateColumn()
-    createdAt: Date;
-        
-    @UpdateDateColumn()
-    submitedAt: Date
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  submitedAt: Date;
 }

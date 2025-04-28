@@ -1,37 +1,73 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Profiles } from './profile.entity';
+import { Assessments_submissions } from './assessment_submissions.entity';
+import { Enrollments } from './enrollments.entity';
+import { Notifications } from './notifications.entity';
 
 @Entity()
-export class Users{
-    @PrimaryGeneratedColumn()
-    id: number;
-    
-    @Column({
-        type: "varchar",
-        unique: true,
-        nullable: false,
-        length: 100,
-        
-    })
-    email: string;
+export class Users {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({
-        type: "varchar",
-        unique: true,
-        nullable: false,
-        length: 100,
-    })
-    username: string;
+  @Column({
+    type: 'varchar',
+    unique: true,
+    nullable: false,
+    length: 100,
+  })
+  email: string;
 
-    @Column({
-        type: "varchar",
-        nullable: false,
-        length: 100,
-    })
-    password: string;
+  @Column({
+    type: 'varchar',
+    unique: true,
+    nullable: false,
+    length: 100,
+  })
+  username: string;
 
-    @CreateDateColumn()
-    createdAt: Date;
+  @Column({
+    type: 'varchar',
+    nullable: false,
+    length: 100,
+  })
+  password: string;
 
-    @UpdateDateColumn()
-    updatedAt: Date
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  // Establishing a one to one relationship with the profiles table
+  @OneToOne(() => Profiles, (profile) => profile.user, {
+    nullable: false,
+    cascade: true,
+  })
+  @JoinColumn()
+  profile: Profiles;
+
+  //Elistablished a one to many relationship with the enrollments table
+  @OneToMany(() => Enrollments, (enrollment) => enrollment.user)
+  enrollments: Enrollments[];
+
+  //Elistablished a one to many relationship with the assessment_submissions table
+  @OneToMany(
+    () => Assessments_submissions,
+    (assessment_submitted) => assessment_submitted.user,
+  )
+  assessment_submitted: Assessments_submissions[];
+
+  //Establishing a one to many relationship with the notification table
+  @OneToMany(() => Notifications, (notification) => notification.user)
+  personalNotifications: Notifications[];
+
 }

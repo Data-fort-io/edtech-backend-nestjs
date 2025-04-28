@@ -1,26 +1,38 @@
-import { status } from "src/common/enums/status.enum";
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { status } from 'src/common/enums/status.enum';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Courses } from './courses.entity';
+import { Users } from './user.entity';
 
 @Entity()
-export class Enrollments{
-    @PrimaryGeneratedColumn()
-    id: Number
+export class Enrollments {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({
-        type: 'varchar',
-        nullable: false
-    })
-    status: status;
+  @Column({
+    type: 'varchar',
+    nullable: false,
+  })
+  status: status;
 
-    // one to many relationship with the user who enrolled
+  // Established a many to one relationship with the user who enrolled
+  @ManyToOne(() => Users, (user) => user.enrollments)
+  user: Users;
 
-    // one to one relationship with the course enrolled for
+  // established a many to one relationship with the course enrolled for
+  @ManyToOne(() => Courses, (course) => course.enrollments)
+  course: Courses;
 
-    
-    @CreateDateColumn()
-    enrolledAt: Date;
-        
-    @UpdateDateColumn()
-    submitedAt: Date
+  @CreateDateColumn()
+  enrolledAt: Date;
 
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

@@ -1,43 +1,58 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Assessments_submissions } from './assessment_submissions.entity';
+import { Courses } from './courses.entity';
 
-Entity()
-export class Assessments{
-    @PrimaryGeneratedColumn()
-    id: Number
+Entity();
+export class Assessments {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({
-        type: "varchar",
-        nullable: true,
-    })
-    title: string
+  @Column({
+    type: 'varchar',
+    nullable: true,
+  })
+  title: string;
 
-    @Column({
-        type: "varchar",
-        nullable: false
-    })
-    type: string;
+  @Column({
+    type: 'varchar',
+    nullable: false,
+  })
+  type: string;
 
-    @Column({
-        type: "text",
-        nullable: false,
-        length: 500
-    })
-    instruction: string;
+  @Column({
+    type: 'text',
+    nullable: false,
+  })
+  instruction: string;
 
-    @Column({
-        type: "number",
-        nullable: false
-    })
-    total_score: number;
+  @Column({
+    type: 'integer',
+    nullable: false,
+  })
+  total_score: number;
 
-    // a many to one relationship with the course
+  //Established a many to many relationship with the course table
+  @ManyToMany(() => Courses, (course) => course.assessments)
+  courses: Courses[];
 
-    @CreateDateColumn()
-    createdAt: Date;
-    
-    @UpdateDateColumn()
-    submitedAt: Date
+  // Established a one to many relationship with the assessment submission table
+  @OneToMany(
+    () => Assessments_submissions,
+    (assessments_submissions) => assessments_submissions.assessment,
+  )
+  assessment_submission: Assessments[];
 
-    
+  @CreateDateColumn()
+  createdAt: Date;
 
+  @UpdateDateColumn()
+  submitedAt: Date;
 }

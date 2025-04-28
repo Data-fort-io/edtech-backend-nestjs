@@ -1,23 +1,43 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Users } from './user.entity';
+import { Courses } from './courses.entity';
+import { Assessments } from './assessments.entity';
+import { Assessments_submissions } from './assessment_submissions.entity';
 
 @Entity()
-export class Leadership_boards{
-    @PrimaryGeneratedColumn()
-    id: Number
+export class Leadership_boards {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({
-        type: "number",
-        nullable: false
-    })
-    percentage: number
+  @Column({
+    type: 'integer',
+    nullable: true,
+  })
+  percentage?: number;
 
-    // one on one relationship with the user who has the course
+  // Established a one to one connection to the assessments_submission table
+  @OneToOne(
+    () => Assessments_submissions,
+    (assessment) => assessment.leaderboard,
+    {
+      nullable: false,
+      cascade: true,
+    },
+  )
+  @JoinColumn()
+  assessment_submission: Assessments_submissions;
 
-    // one to one relationship with the course
-    
-    @CreateDateColumn()
-    createdAt: Date;
-        
-    @UpdateDateColumn()
-    submitedAt: Date
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  submitedAt: Date;
 }

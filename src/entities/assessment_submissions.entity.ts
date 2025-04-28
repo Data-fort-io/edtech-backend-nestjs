@@ -1,22 +1,51 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Assessments } from './assessments.entity';
+import { Users } from './user.entity';
+import { Leadership_boards } from './leadership_boards.entity';
 
 @Entity()
-export class Assessments_submissions{
-    @PrimaryGeneratedColumn()
-    id: Number
+export class Assessments_submissions {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({
-        type: "number",
-        nullable: false,
-    })
-    score: number;
+  @Column({
+    type: 'integer',
+    nullable: false,
+  })
+  score: number;
 
-    // A one on one relationship with the assessment table
+  // established a many to one relationship with the assessment table
+  @ManyToOne(
+    () => Assessments,
+    (assessment) => assessment.assessment_submission,
+  )
+  assessment: Assessments;
 
-    
-    @CreateDateColumn()
-    createdAt: Date;
+  //Established a many to one relationship with the assessment table
+  @ManyToOne(() => Users, (user) => user.assessment_submitted)
+  user: Users;
 
-    @UpdateDateColumn()
-    submitedAt: Date
+  // Establish aconnection with the leaderboard
+  @OneToOne(
+    () => Leadership_boards,
+    (leaderboard) => leaderboard.assessment_submission,
+    {
+      nullable: false,
+    },
+  )
+  leaderboard: Leadership_boards;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  submitedAt: Date;
 }
