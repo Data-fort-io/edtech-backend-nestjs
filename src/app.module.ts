@@ -13,36 +13,44 @@ import { Resourses } from './entities/resourses.entity';
 import { Enrollments } from './entities/enrollments.entity';
 import { Profiles } from './entities/profile.entity';
 import { UsersModule } from './users/users.module';
+import { ProfilesModule } from './profiles/profiles.module';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import appConfig  from './config/app.config';
+import database from './config/database.config';
+import envValidator from './config/env.validation'
 
+const ENV = process.env.NODE_ENV
 
 @Module({
-  imports: [TypeOrmModule.forRootAsync({
-    useFactory: ()=>({
-      type: "postgres",
-      autoLoadEntities: false,
-      synchronize: true,
-      host: "localhost",
-      port: 5342,
-      username: "postgres",
-      password: "postgres",
-      database: "edtech_db",
 
-      entities: [
-        Users,
-        Resourses,
-        Profiles,
-        Recordings,
-        Notifications,
-        Leadership_boards,
-        Enrollments,
-        Courses,
-        Assessments,
-        Assessments_submissions
-      ],
-    })
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: !ENV ? '.env' : `.env.${ENV}`,
+      load:[appConfig, database],
+      validationSchema: envValidator
+      
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService)=> ({
+      type: "postgres",
+      autoLoadEntities: configService.get('database.autoLoadEntities'),
+      synchronize: configService.get('database.sync'),
+      host: configService.get('database.host'),
+      port: configService.get<number>('database.port'),
+      username: configService.get('database.username'),
+      password: configService.get('database.password'),
+      database: configService.get('database.name'),
+})
   
-  }), UsersModule],
+  }), UsersModule, ProfilesModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
+
 export class AppModule {}
+
+
