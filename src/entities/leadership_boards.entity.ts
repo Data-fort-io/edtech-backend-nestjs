@@ -1,3 +1,4 @@
+/*
 import {
   Column,
   CreateDateColumn,
@@ -7,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Users } from './user.entity';
+import { Users } from '../users/user.entity';
 import { Courses } from './courses.entity';
 import { Assessments } from './assessments.entity';
 import { Assessments_submissions } from './assessment_submissions.entity';
@@ -41,3 +42,4 @@ export class Leadership_boards {
   @UpdateDateColumn()
   submitedAt: Date;
 }
+*/

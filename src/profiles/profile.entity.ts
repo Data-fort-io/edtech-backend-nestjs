@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Users } from './user.entity';
+import { Users } from '../users/user.entity';
 
 @Entity()
 export class Profiles {
@@ -61,3 +61,4 @@ export class Profiles {
   @OneToOne(() => Users, (user) => user.profile)
   user: Users;
 }
+

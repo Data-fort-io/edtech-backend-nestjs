@@ -8,11 +8,13 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Profiles } from './profile.entity';
-import { Assessments_submissions } from './assessment_submissions.entity';
-import { Enrollments } from './enrollments.entity';
-import { Notifications } from './notifications.entity';
 
+import { Profiles } from '../profiles/profile.entity';
+/*
+import { Assessments_submissions } from '../entities/assessment_submissions.entity';
+import { Enrollments } from '../entities/enrollments.entity';
+import { Notifications } from '../entities/notifications.entity';
+*/
 @Entity()
 export class Users {
   @PrimaryGeneratedColumn()
@@ -49,11 +51,14 @@ export class Users {
 
   // Establishing a one to one relationship with the profiles table
   @OneToOne(() => Profiles, (profile) => profile.user, {
-    nullable: false,
-    cascade: true,
+    //nullable: true,
+    cascade: ['insert', 'remove'],
+    eager: true
   })
   @JoinColumn()
-  profile: Profiles;
+  profile?: Profiles;
+
+  /*
 
   //Elistablished a one to many relationship with the enrollments table
   @OneToMany(() => Enrollments, (enrollment) => enrollment.user)
@@ -69,5 +74,5 @@ export class Users {
   //Establishing a one to many relationship with the notification table
   @OneToMany(() => Notifications, (notification) => notification.user)
   personalNotifications: Notifications[];
-
+*/
 }

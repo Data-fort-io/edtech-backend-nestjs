@@ -1,3 +1,4 @@
+/*
 import {
   Column,
   CreateDateColumn,
@@ -35,3 +36,4 @@ export class Resourses {
   @ManyToMany(() => Courses, (course) => course.resources)
   courses: Courses[];
 }
+*/

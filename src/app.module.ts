@@ -2,7 +2,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { Users } from './entities/user.entity';
+import { Users } from './users/user.entity';
+/*
 import { Assessments } from './entities/assessments.entity';
 import { Assessments_submissions } from './entities/assessment_submissions.entity';
 import { Notifications } from './entities/notifications.entity';
@@ -11,7 +12,9 @@ import { Courses } from './entities/courses.entity';
 import { Recordings } from './entities/recordings.entity';
 import { Resourses } from './entities/resourses.entity';
 import { Enrollments } from './entities/enrollments.entity';
-import { Profiles } from './entities/profile.entity';
+
+import { Profiles } from './profiles/profile.entity';
+*/
 import { UsersModule } from './users/users.module';
 import { ProfilesModule } from './profiles/profiles.module';
 import { AuthModule } from './auth/auth.module';
@@ -37,13 +40,16 @@ const ENV = process.env.NODE_ENV
       inject: [ConfigService],
       useFactory: (configService: ConfigService)=> ({
       type: "postgres",
-      autoLoadEntities: configService.get('database.autoLoadEntities'),
-      synchronize: configService.get('database.sync'),
+      autoLoadEntities: true,
+      synchronize: true,
+      //dropSchema:true,
+      //entities: [Users],
       host: configService.get('database.host'),
       port: configService.get<number>('database.port'),
       username: configService.get('database.username'),
       password: configService.get('database.password'),
       database: configService.get('database.name'),
+      
 })
   
   }), UsersModule, ProfilesModule, AuthModule],

@@ -1,3 +1,4 @@
+/*
 import { status } from 'src/common/enums/status.enum';
 import {
   Column,
@@ -9,7 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Courses } from './courses.entity';
-import { Users } from './user.entity';
+import { Users } from '../users/user.entity';
 
 @Entity()
 export class Enrollments {
@@ -35,4 +36,6 @@ export class Enrollments {
 
   @UpdateDateColumn()
   updatedAt: Date;
+  
 }
+*/

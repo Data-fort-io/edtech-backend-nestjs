@@ -1,3 +1,4 @@
+/*
 import { Track } from 'src/common/enums/track.enum';
 import {
   Column,
@@ -15,6 +16,7 @@ import { Enrollments } from './enrollments.entity';
 import { Notifications } from './notifications.entity';
 import { Recordings } from './recordings.entity';
 import { Resourses } from './resourses.entity';
+
 
 @Entity()
 export class Courses {
@@ -75,4 +77,6 @@ export class Courses {
 
   @UpdateDateColumn()
   submitedAt: Date;
+  
 }
+  */

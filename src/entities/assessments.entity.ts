@@ -1,3 +1,4 @@
+/*
 import {
   Column,
   CreateDateColumn,
@@ -56,3 +57,4 @@ export class Assessments {
   @UpdateDateColumn()
   submitedAt: Date;
 }
+*/

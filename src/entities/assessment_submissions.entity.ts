@@ -1,3 +1,4 @@
+/*
 import {
   Column,
   CreateDateColumn,
@@ -8,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Assessments } from './assessments.entity';
-import { Users } from './user.entity';
+import { Users } from '../users/user.entity';
 import { Leadership_boards } from './leadership_boards.entity';
 
 @Entity()
@@ -49,3 +50,4 @@ export class Assessments_submissions {
   @UpdateDateColumn()
   submitedAt: Date;
 }
+*/

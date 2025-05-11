@@ -1,3 +1,4 @@
+/*
 import {
   Column,
   CreateDateColumn,
@@ -6,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Users } from './user.entity';
+import { Users } from '../users/user.entity';
 import { Courses } from './courses.entity';
 
 @Entity()
@@ -47,3 +48,4 @@ export class Notifications {
   })
   course: Courses;
 }
+*/
