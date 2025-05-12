@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, forwardRef, Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dto/createUser.dto';
 import { LoginUserDto } from 'src/users/dto/loginUser.dto';
 import { UsersService } from 'src/users/users.service';
@@ -21,13 +21,14 @@ export class AuthService {
         private readonly jwtService: JwtService
     ){}
 
+    // function to perform login authentication
     public async login(loginDto: LoginUserDto){
         const user = await this.userService.loginUser(loginDto)
 
         // Compare password
         const isMatch = await this.hashProvider.comparePassword(loginDto.password, user.password)
         if(isMatch === false){
-            return "Wrong password"
+            throw new BadRequestException("Wrong password")
         }
 
         //Generate a JWT Tokon 
@@ -40,12 +41,17 @@ export class AuthService {
         })
 
         return {
-            token
-        }
-        
+            token,
+            message: "user successfully loged in"
+        }      
     }
 
     public async signup(signupDtO: CreateUserDto){
-        return await this.userService.createUser(signupDtO)
+        const newUser = await this.userService.createUser(signupDtO)
+
+        return {
+            data: newUser,
+            message: "User successfully created"
+        }
     }
 }
