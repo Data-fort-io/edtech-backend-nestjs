@@ -1,5 +1,5 @@
 import { Transform } from "class-transformer"
-import { IsDateString, IsEnum, IsOptional, IsString, IsUrl, Length } from "class-validator"
+import { IsArray, IsDateString, IsEnum, IsOptional, IsString, IsUrl, Length } from "class-validator"
 import { Gender } from "src/common/enums/gender.enum"
 import { Track } from "src/common/enums/track.enum"
 
@@ -15,7 +15,7 @@ export class ProfileDto{
     @IsOptional()
     bio?: string
 
-    @Transform(({value})=> value.toUppercase())
+    @Transform(({value})=> value.toUpperCase())
     @IsEnum(Gender)
     @IsString()
     @IsOptional()
@@ -24,12 +24,6 @@ export class ProfileDto{
     @IsUrl()
     @IsOptional()
     image?: string
-
-    @Transform(({value})=> value.toUppercase())
-    @IsEnum(Track)
-    @IsString()
-    @IsOptional()
-    track?: Track[]
 
     @IsDateString({}, {message: "Date of Birth must be a valid ISO date string (e.g YYYY-MM-DD)"})
     @IsOptional()

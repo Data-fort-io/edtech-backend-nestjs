@@ -1,5 +1,6 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, MinLength, minLength } from "class-validator"
+import { IsArray, IsEmail, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, MinLength, minLength } from "class-validator"
 import { optional } from "joi"
+import { Tracks } from "src/entities/track .entity"
 import { ProfileDto } from "src/profiles/dto/profiles.dto"
 
 export class CreateUserDto{
@@ -23,4 +24,8 @@ export class CreateUserDto{
 
     @IsOptional()
     profile: ProfileDto | null;
+
+    @IsOptional()
+    @IsArray()
+    tracks: Tracks[]
 }

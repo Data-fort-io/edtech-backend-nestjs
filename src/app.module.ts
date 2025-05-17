@@ -22,6 +22,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import appConfig  from './config/app.config';
 import database from './config/database.config';
 import envValidator from './config/env.validation'
+import authConfig from './auth/config/auth.config';
+import { JwtModule } from '@nestjs/jwt';
+import { Tracks } from './entities/track .entity';
 
 const ENV = process.env.NODE_ENV
 
@@ -43,7 +46,7 @@ const ENV = process.env.NODE_ENV
       autoLoadEntities: true,
       synchronize: true,
       //dropSchema:true,
-      //entities: [Users],
+      entities: [Users, Tracks],
       host: configService.get('database.host'),
       port: configService.get<number>('database.port'),
       username: configService.get('database.username'),
@@ -52,7 +55,11 @@ const ENV = process.env.NODE_ENV
       
 })
   
-  }), UsersModule, ProfilesModule, AuthModule],
+  }), 
+  UsersModule, ProfilesModule, AuthModule,
+  ConfigModule.forFeature(authConfig),
+  JwtModule.registerAsync(authConfig.asProvider())
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

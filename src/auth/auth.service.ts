@@ -54,4 +54,5 @@ export class AuthService {
             message: "User successfully created"
         }
     }
+
 }

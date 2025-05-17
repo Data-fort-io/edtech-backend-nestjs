@@ -36,12 +36,6 @@ export class Profiles {
   image: string;
 
   @Column({
-    type: 'simple-array',
-    nullable: true,
-  })
-  track: Track[];
-
-  @Column({
     type: 'varchar',
     nullable: true,
   })

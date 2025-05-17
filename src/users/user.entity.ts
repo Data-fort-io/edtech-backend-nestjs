@@ -3,6 +3,8 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -10,6 +12,9 @@ import {
 } from 'typeorm';
 
 import { Profiles } from '../profiles/profile.entity';
+import { Tracks } from 'src/entities/track .entity';
+
+
 /*
 import { Assessments_submissions } from '../entities/assessment_submissions.entity';
 import { Enrollments } from '../entities/enrollments.entity';
@@ -57,6 +62,10 @@ export class Users {
   })
   @JoinColumn()
   profile?: Profiles;
+
+  @ManyToMany(()=> Tracks, (track)=> track.user)
+  @JoinTable()
+  track: Tracks[]
 
   /*
 
