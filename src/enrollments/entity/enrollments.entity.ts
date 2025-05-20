@@ -1,5 +1,7 @@
-/*
-import { status } from 'src/common/enums/status.enum';
+
+import { Status } from 'src/common/enums/status.enum';
+import { Courses } from 'src/courses/entity/courses.entity copy';
+import { Users } from 'src/users/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -9,8 +11,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Courses } from './courses.entity';
-import { Users } from '../users/user.entity';
+
 
 @Entity()
 export class Enrollments {
@@ -19,16 +20,17 @@ export class Enrollments {
 
   @Column({
     type: 'varchar',
+    default: Status.PENDING,
     nullable: false,
   })
-  status: status;
+  status: Status;
 
   // Established a many to one relationship with the user who enrolled
-  @ManyToOne(() => Users, (user) => user.enrollments)
+  @ManyToOne(() => Users, (user) => user.enrollments, {nullable: false})
   user: Users;
 
   // established a many to one relationship with the course enrolled for
-  @ManyToOne(() => Courses, (course) => course.enrollments)
+  @ManyToOne(() => Courses, (course) => course.enrollments, {nullable: false})
   course: Courses;
 
   @CreateDateColumn()
@@ -38,4 +40,3 @@ export class Enrollments {
   updatedAt: Date;
   
 }
-*/

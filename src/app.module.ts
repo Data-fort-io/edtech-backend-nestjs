@@ -8,7 +8,7 @@ import { Assessments } from './entities/assessments.entity';
 import { Assessments_submissions } from './entities/assessment_submissions.entity';
 import { Notifications } from './entities/notifications.entity';
 import { Leadership_boards } from './entities/leadership_boards.entity';
-import { Courses } from './entities/courses.entity';
+
 import { Recordings } from './entities/recordings.entity';
 import { Resourses } from './entities/resourses.entity';
 import { Enrollments } from './entities/enrollments.entity';
@@ -25,6 +25,10 @@ import envValidator from './config/env.validation'
 import authConfig from './auth/config/auth.config';
 import { JwtModule } from '@nestjs/jwt';
 import { Tracks } from './entities/track .entity';
+import { CoursesModule } from './courses/courses.module';
+import { EnrollmentsModule } from './enrollments/enrollments.module';
+import { Courses } from './courses/entity/courses.entity copy';
+import { Enrollments } from './enrollments/entity/enrollments.entity';
 
 const ENV = process.env.NODE_ENV
 
@@ -46,7 +50,7 @@ const ENV = process.env.NODE_ENV
       autoLoadEntities: true,
       synchronize: true,
       //dropSchema:true,
-      entities: [Users, Tracks],
+      entities: [Users, Tracks, Courses, Enrollments],
       host: configService.get('database.host'),
       port: configService.get<number>('database.port'),
       username: configService.get('database.username'),
@@ -58,7 +62,9 @@ const ENV = process.env.NODE_ENV
   }), 
   UsersModule, ProfilesModule, AuthModule,
   ConfigModule.forFeature(authConfig),
-  JwtModule.registerAsync(authConfig.asProvider())
+  JwtModule.registerAsync(authConfig.asProvider()),
+  CoursesModule,
+  EnrollmentsModule
   ],
   controllers: [AppController],
   providers: [AppService],

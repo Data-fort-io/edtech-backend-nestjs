@@ -120,9 +120,13 @@ export class UsersService {
             const userDesiredTracks = await this.userTrackRepo.find({
                 where: userDesiredTrack.map(name => ({ name }))
             })
+
+
  
             //Update the user track
             user.track = userDesiredTracks
+
+
             
             await this.userRepo.save(user);
 
@@ -137,9 +141,7 @@ export class UsersService {
             
             throw error
         }
-        
-        
-        //const user = await this.userRepo.update(id, userTrack)
+
     }
 
 }

@@ -1,5 +1,6 @@
 import { string } from "joi";
 import { type } from "os";
+import { Courses } from "src/courses/entity/courses.entity copy";
 import { Profiles } from "src/profiles/profile.entity";
 import { Users } from "src/users/user.entity";
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
@@ -21,4 +22,7 @@ export class Tracks{
         cascade: true
     })
     user: Users[]
+
+    @ManyToMany(()=> Courses, (courses)=> courses.tracks)
+    courses: Courses[]
 }

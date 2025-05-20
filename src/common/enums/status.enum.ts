@@ -1,5 +1,5 @@
-export enum status {
-    PENDING = "pending",
-    APPROVED = "approved",
-    DECLINEC = "declined"
+export enum Status {
+    PENDING = 'pending',
+    APPROVED = 'approved',
+    DECLINEC = 'declined'
 }

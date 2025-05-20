@@ -13,11 +13,11 @@ import {
 
 import { Profiles } from '../profiles/profile.entity';
 import { Tracks } from 'src/entities/track .entity';
+import { Enrollments } from 'src/enrollments/entity/enrollments.entity';
 
 
 /*
 import { Assessments_submissions } from '../entities/assessment_submissions.entity';
-import { Enrollments } from '../entities/enrollments.entity';
 import { Notifications } from '../entities/notifications.entity';
 */
 @Entity()
@@ -67,11 +67,13 @@ export class Users {
   @JoinTable()
   track: Tracks[]
 
-  /*
-
   //Elistablished a one to many relationship with the enrollments table
   @OneToMany(() => Enrollments, (enrollment) => enrollment.user)
   enrollments: Enrollments[];
+
+  /*
+
+  //
 
   //Elistablished a one to many relationship with the assessment_submissions table
   @OneToMany(
