@@ -97,6 +97,29 @@ export class UsersService {
         }
     }
 
+    //Get user  by Id
+    public async findUserById(id: number){
+        try {
+            const user = await this.userRepo.findOne({
+                where: { id }
+            })
+
+            if(!user){
+                throw new NotFoundException('User was not found')
+            }
+
+            return user;
+        } catch (error) {
+            if(error.code === "ECONNECTIONREFUSED"){
+                throw new RequestTimeoutException("An error has occured. Please try again", {
+                    description: "Could not connect to the data base"
+                })
+            } 
+            
+            throw error;            
+        }
+    }
+
     // Update user track
     public async updateUserTrack(id: number, userTrack: updateUserTrackDto){
         

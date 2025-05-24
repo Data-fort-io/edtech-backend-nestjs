@@ -9,5 +9,6 @@ export default Joi.object({
     DB_NAME: Joi.string().required(),
     DB_HOST: Joi.string().required(),
     JWT_SECRETE_KEY: Joi.string().required(),
-    JWT_TIMEOUT: Joi.number().required()
+    JWT_TIMEOUT: Joi.number().required(),
+    REFRESH_TOKEN_TIMEOUT: Joi.number().required()
 })

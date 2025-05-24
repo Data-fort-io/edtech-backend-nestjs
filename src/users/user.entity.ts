@@ -14,6 +14,7 @@ import {
 import { Profiles } from '../profiles/profile.entity';
 import { Tracks } from 'src/entities/track .entity';
 import { Enrollments } from 'src/enrollments/entity/enrollments.entity';
+import { Notifications } from 'src/notifications/entity/notifications.entities';
 
 
 /*
@@ -71,6 +72,11 @@ export class Users {
   @OneToMany(() => Enrollments, (enrollment) => enrollment.user)
   enrollments: Enrollments[];
 
+  //Establishing a one to many relationship with the notification table
+  @ManyToMany(() => Notifications, (notification) => notification.users)
+  @JoinTable()
+  notifications: Notifications[];
+
   /*
 
   //
@@ -82,8 +88,6 @@ export class Users {
   )
   assessment_submitted: Assessments_submissions[];
 
-  //Establishing a one to many relationship with the notification table
-  @OneToMany(() => Notifications, (notification) => notification.user)
-  personalNotifications: Notifications[];
+
 */
 }

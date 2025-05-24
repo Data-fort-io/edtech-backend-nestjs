@@ -9,6 +9,7 @@ import { ProfilesModule } from 'src/profiles/profiles.module';
 import { Tracks } from 'src/entities/track .entity';
 import { CoursesModule } from 'src/courses/courses.module';
 import { EnrollmentsModule } from 'src/enrollments/enrollments.module';
+import { NotificationsModule } from 'src/notifications/notifications.module';
 
 @Module({
   providers: [UsersService,],
@@ -18,7 +19,8 @@ import { EnrollmentsModule } from 'src/enrollments/enrollments.module';
     forwardRef(()=> AuthModule),
     forwardRef(()=> ProfilesModule),
     forwardRef(()=> CoursesModule),
-    forwardRef(()=> EnrollmentsModule)
+    forwardRef(()=> EnrollmentsModule),
+    forwardRef(()=> NotificationsModule)
   ],
   exports: [UsersService]
 })

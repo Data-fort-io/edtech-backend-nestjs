@@ -10,6 +10,7 @@ import { EnrollmentsService } from 'src/enrollments/enrollments.service';
 import { Status } from 'src/common/enums/status.enum';
 import { parse } from 'path';
 import { EnrollmentStatusQueryDTO } from './dto/erollmentStatus.dto';
+import { NotificationsService } from 'src/notifications/notifications.service';
 
 @Controller('users')
 export class UsersController {
@@ -20,7 +21,9 @@ export class UsersController {
 
         public readonly courseService: CoursesService,
 
-        public readonly enrollmentService: EnrollmentsService
+        public readonly enrollmentService: EnrollmentsService,
+
+        public readonly notificationService: NotificationsService,
     ){}
 
     @Get("me")
@@ -59,5 +62,10 @@ export class UsersController {
         }
 
         return this.enrollmentService.userEnrolledCourses(userId)
+    }
+
+    @Get('notifications')
+    async userNotifications(@ActiveUser("sub") userId: number){
+       return await this.notificationService.getAllNotifications(userId)    
     }
 }

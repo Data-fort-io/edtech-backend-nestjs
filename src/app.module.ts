@@ -29,6 +29,8 @@ import { CoursesModule } from './courses/courses.module';
 import { EnrollmentsModule } from './enrollments/enrollments.module';
 import { Courses } from './courses/entity/courses.entity copy';
 import { Enrollments } from './enrollments/entity/enrollments.entity';
+import { NotificationsModule } from './notifications/notifications.module';
+import { Notifications } from './notifications/entity/notifications.entities';
 
 const ENV = process.env.NODE_ENV
 
@@ -50,7 +52,7 @@ const ENV = process.env.NODE_ENV
       autoLoadEntities: true,
       synchronize: true,
       //dropSchema:true,
-      entities: [Users, Tracks, Courses, Enrollments],
+      entities: [Users, Tracks, Courses, Enrollments, Notifications],
       host: configService.get('database.host'),
       port: configService.get<number>('database.port'),
       username: configService.get('database.username'),
@@ -64,7 +66,8 @@ const ENV = process.env.NODE_ENV
   ConfigModule.forFeature(authConfig),
   JwtModule.registerAsync(authConfig.asProvider()),
   CoursesModule,
-  EnrollmentsModule
+  EnrollmentsModule,
+  NotificationsModule
   ],
   controllers: [AppController],
   providers: [AppService],
