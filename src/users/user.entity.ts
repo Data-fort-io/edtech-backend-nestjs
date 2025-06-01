@@ -15,6 +15,7 @@ import { Profiles } from '../profiles/profile.entity';
 import { Tracks } from 'src/entities/track .entity';
 import { Enrollments } from 'src/enrollments/entity/enrollments.entity';
 import { Notifications } from 'src/notifications/entity/notifications.entities';
+import { Assessments_submissions } from 'src/assessment_submission/entity/assessment_submission.entity';
 
 
 /*
@@ -77,17 +78,9 @@ export class Users {
   @JoinTable()
   notifications: Notifications[];
 
-  /*
-
-  //
 
   //Elistablished a one to many relationship with the assessment_submissions table
-  @OneToMany(
-    () => Assessments_submissions,
-    (assessment_submitted) => assessment_submitted.user,
-  )
+  @OneToMany(() => Assessments_submissions, (assessment_submitted) => assessment_submitted.user)
   assessment_submitted: Assessments_submissions[];
 
-
-*/
 }

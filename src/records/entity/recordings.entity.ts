@@ -1,16 +1,16 @@
-/*
+import { Courses } from 'src/courses/entity/courses.entity copy';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Courses } from './courses.entity';
+
 
 @Entity()
-export class Resourses {
+export class Records {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -18,22 +18,20 @@ export class Resourses {
     type: 'varchar',
     nullable: false,
   })
-  title: string;
+  url: string;
 
   @Column({
-    type: 'varchar',
+    type: 'integer',
     nullable: false,
   })
-  url: string;
+  duration: number;
+
+  @ManyToOne(() => Courses, (course) => course.record)
+  course: Courses;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   submitedAt: Date;
-
-  //Established a many to many relationship with the courses
-  @ManyToMany(() => Courses, (course) => course.resources)
-  courses: Courses[];
 }
-*/

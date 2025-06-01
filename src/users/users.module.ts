@@ -10,6 +10,11 @@ import { Tracks } from 'src/entities/track .entity';
 import { CoursesModule } from 'src/courses/courses.module';
 import { EnrollmentsModule } from 'src/enrollments/enrollments.module';
 import { NotificationsModule } from 'src/notifications/notifications.module';
+import { AssessmentsModule } from 'src/assessments/assessments.module';
+import { AssessmentSubmissionModule } from 'src/assessment_submission/assessment_submission.module';
+import { Records } from 'src/records/entity/recordings.entity';
+import { RecordsModule } from 'src/records/records.module';
+import { ResoursesModule } from 'src/resourses/resourses.module';
 
 @Module({
   providers: [UsersService,],
@@ -20,7 +25,11 @@ import { NotificationsModule } from 'src/notifications/notifications.module';
     forwardRef(()=> ProfilesModule),
     forwardRef(()=> CoursesModule),
     forwardRef(()=> EnrollmentsModule),
-    forwardRef(()=> NotificationsModule)
+    forwardRef(()=> NotificationsModule),
+    forwardRef(()=> AssessmentsModule),
+    forwardRef(()=> AssessmentSubmissionModule),
+    forwardRef(()=> RecordsModule),
+    forwardRef(()=> ResoursesModule)
   ],
   exports: [UsersService]
 })

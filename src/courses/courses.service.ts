@@ -15,6 +15,7 @@ export class CoursesService {
         private userRepo: Repository<Users>
     ){}
 
+    //Get all user recommended courses by track
     public async userCourses(id: number){
 
         try {
@@ -22,7 +23,7 @@ export class CoursesService {
             //Get all the desired tracks of the user
             const user = await this.userRepo.findOne({
                 where: { id },
-                relations: [ 'track' ]
+                relations: [ 'track']
             })
 
             // Get the list of the tracks id
@@ -33,18 +34,17 @@ export class CoursesService {
                                                     .leftJoinAndSelect('course.tracks', 'track').where('track.id IN (:...ids)', { ids: userTracksId })
                                                     .getMany();
 
+
             if(userSuggestedCourse.length < 1){
                 throw new NotFoundException("There are no registered course for your track(s)")
             }
 
             return userSuggestedCourse.map(course => ({
-                    id: course.id,
-                    title: course.title,
-                    duration: course.duration,
-                    objectives: course.objectives,
-                    track: course.tracks.map(track => ({
-                        name: track.name
-                })),
+                id: course.id,
+                title: course.title,
+                duration: course.duration,
+                objectives: course.objectives,
+                track: course.tracks.map(track => (track.name)),
                 createdAt: course.createdAt,
                 submitedAt: course.submitedAt
             }))

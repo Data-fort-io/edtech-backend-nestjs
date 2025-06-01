@@ -1,12 +1,10 @@
 import { Injectable, NotFoundException, RequestTimeoutException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserProfileDto } from 'src/users/dto/updateUserProfile.dto';
+
 import { Users } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
 import { Profiles } from './profile.entity';
 import { ProfileDto } from './dto/profiles.dto';
-import { ActiveUser } from 'src/auth/decorators/activeUser.decorator';
-import { ActiveUserType } from 'src/auth/interfaces/active.interface';
 
 @Injectable()
 export class ProfilesService {
@@ -26,7 +24,8 @@ export class ProfilesService {
             const userInfo =  await this.userRepo.findOne({
                 where: {
                     id: userId
-                }
+                },
+                relations: [ 'profile']
             })
 
             if(!userInfo){
@@ -52,23 +51,18 @@ export class ProfilesService {
         
         try {
             //Find authenticated user by id from the payload
-            const userInfo =  await this.userRepo.findOne({
+            const profile =  await this.profileRepo.findOne({
                 where: {
-                    id: userId
-                },
-                relations: ['profile']
+                    user: { id: userId}
+                }
             })
 
-            // GEt the profile of the user
-            const profile = userInfo?.profile;
             if(!profile){
-                throw new NotFoundException("Profile not found");
+                throw new NotFoundException('Profile not found')                
             }
 
-            //Update the profile of the user
-            await this.profileRepo.update(profile.id, updateProfileInfo)
-            
-            return "Profile Updated successfully"
+            Object.assign(profile, updateProfileInfo)
+            return await this.profileRepo.save(profile)
             
         } catch (error) {
             if(error.code === "ECONNECTIONREFUSED"){

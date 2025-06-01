@@ -1,4 +1,4 @@
-import { BadRequestException, forwardRef, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, forwardRef, Inject, Injectable, RequestTimeoutException, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dto/createUser.dto';
 import { LoginUserDto } from 'src/users/dto/loginUser.dto';
 import { UsersService } from 'src/users/users.service';
@@ -26,25 +26,46 @@ export class AuthService {
 
     // function to perform login authentication
     public async login(loginDto: LoginUserDto){
-        const user = await this.userService.loginUser(loginDto)
+        try {
+            const user = await this.userService.loginUser(loginDto)
 
-        // Compare password
-        const isMatch = await this.hashProvider.comparePassword(loginDto.password, user.password)
-        if(isMatch === false){
-            throw new BadRequestException("Wrong password")
-        }
+            // Compare password
+            const isMatch = await this.hashProvider.comparePassword(loginDto.password, user.password)
+            if(isMatch === false){
+                throw new BadRequestException("Wrong password")
+            }
 
-        //return the the access and refresh token 
-        return this.generateToken(user)     
+            //return the the access and refresh token 
+            return this.generateToken(user)  
+
+        } catch (error) {
+            if(error.code === "ECONNECTIONREFUSED"){
+                throw new RequestTimeoutException("An error has occured. Please try again", {
+                    description: "Could not connect to the data base"
+                })
+            }
+            throw error            
+        }     
     }
 
     public async signup(signupDtO: CreateUserDto){
-        const newUser = await this.userService.createUser(signupDtO)
+        try {
+            const newUser = await this.userService.createUser(signupDtO)
 
-        return {
-            data: newUser,
-            message: "User successfully created"
+            return {
+                data: newUser,
+                message: "User successfully created"
+            }
+            
+        } catch (error) {
+            if(error.code === "ECONNECTIONREFUSED"){
+                throw new RequestTimeoutException("An error has occured. Please try again", {
+                    description: "Could not connect to the data base"
+                })
+            } 
+            throw error           
         }
+        
     }
 
     private async signToken<T>(userId: number, expireIn: number, payload?: T){

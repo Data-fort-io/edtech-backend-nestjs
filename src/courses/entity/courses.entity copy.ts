@@ -1,9 +1,13 @@
+import { Assessments } from 'src/assessments/entity/assessment.entity';
 import { Enrollments } from 'src/enrollments/entity/enrollments.entity';
 import { Tracks } from 'src/entities/track .entity';
+import { Records } from 'src/records/entity/recordings.entity';
+import { Resources} from 'src/resourses/entity/resourses.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   OneToMany,
@@ -52,30 +56,22 @@ export class Courses {
   // Establish a one to many relationsh with the enrollments table
   @OneToMany(() => Enrollments, (enrollments) => enrollments.course)
   enrollments: Enrollments[];
-/*
+
+  //Etablishing a one to one relationship with the assessment table
+  @OneToOne(() => Assessments, (assessment) => assessment.course)
+  @JoinColumn()
+  assessment: Assessments;
+
+
   // Established a one to one relationship with the recording table
-  @OneToMany(() => Recordings, (record) => record.course)
-  record: Recordings[];
+  @OneToMany(() => Records, (record) => record.course)
+  record: Records[];
 
-  //Etablishing a mant to many relationship with the assessment table
-  @ManyToMany(() => Assessments, (assessment) => assessment.courses)
-  @JoinTable()
-  assessments: Assessments[];
-
-  //Established a many to many relationship with the resourses table
-  @ManyToMany(() => Resourses, (resourse) => resourse.courses, {
+  //Established a one to many relationship with the resourses table
+  @OneToMany(() => Resources, (resource) => resource.courses, {
     nullable: true,
   })
-  @JoinTable()
-  resources?: Resourses[];
-
-
-
-  //Establishing a one to many relationship with the notification table
-  @OneToMany(() => Notifications, (notification) => notification.course)
-  courseNotifications: Notifications[];
-
-  */
+  resources?: Resources[];
 
   @CreateDateColumn()
   createdAt: Date;

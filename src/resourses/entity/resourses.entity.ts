@@ -1,4 +1,4 @@
-/*
+import { Courses } from 'src/courses/entity/courses.entity copy';
 import {
   Column,
   CreateDateColumn,
@@ -7,10 +7,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Courses } from './courses.entity';
 
 @Entity()
-export class Recordings {
+export class Resources {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -18,22 +17,21 @@ export class Recordings {
     type: 'varchar',
     nullable: false,
   })
-  url: string;
+  title: string;
 
   @Column({
-    type: 'integer',
+    type: 'varchar',
     nullable: false,
   })
-  duration: number;
-
-  //Established a one to one relationship with the course recorded
-  @ManyToOne(() => Courses, (course) => course.record)
-  course: Courses;
+  url: string;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   submitedAt: Date;
+
+  //Established a many to one relationship with the courses
+  @ManyToOne(() => Courses, (course) => course.resources)
+  courses: Courses;
 }
-*/

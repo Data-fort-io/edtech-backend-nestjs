@@ -10,6 +10,7 @@ export class NotificationsService {
         private notificationsRepo: Repository<Notifications>
     ){}
 
+    // get all user notifications
     public async getAllNotifications(userId: number){
 
         try {
@@ -43,6 +44,41 @@ export class NotificationsService {
         }
         
         
+    }
+
+    //Read notifications
+    public async readNotification(notificationId, userId){
+        try {
+
+            //Get the the notification by notification Id and the user Id
+            const notification = await this.notificationsRepo.findOne({
+                where: { 
+                    id: notificationId,
+                    users: { id: userId}
+                 }
+            })
+
+            //If it does not exist throw an error
+            if(!notification){
+                throw new NotFoundException("Notification not found")
+            }
+
+            //Update the read status to true
+            notification.read = true;
+            
+            //Save the updated profile
+            return await this.notificationsRepo.save(notification)
+            
+        } catch (error) {
+            if(error.code === "ECONNECTIONREFUSED"){
+                throw new RequestTimeoutException("An error has occured. Please try again", {
+                    description: "Could not connect to the data base"
+                })
+            }
+            
+            throw error            
+        }
+
     }
 
 }

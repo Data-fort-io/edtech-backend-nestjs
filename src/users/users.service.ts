@@ -34,7 +34,7 @@ export class UsersService {
 
             //check if the user with the abovve username is registered
             if(!user){
-                throw new BadRequestException("Username dose not exist")
+                throw new NotFoundException("Username dose not exist")
             }
             // convert user info to accessible object        
             const plainUser = JSON.parse(JSON.stringify(user))
@@ -127,7 +127,6 @@ export class UsersService {
         const userDesiredTrack = userTrack.tracks
 
         try {
-
             const user = await this.userRepo.findOne(
                 {
                     where: { id },
@@ -144,12 +143,8 @@ export class UsersService {
                 where: userDesiredTrack.map(name => ({ name }))
             })
 
-
- 
             //Update the user track
             user.track = userDesiredTracks
-
-
             
             await this.userRepo.save(user);
 

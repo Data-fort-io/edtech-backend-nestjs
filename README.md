@@ -1,30 +1,8 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# EDTECH
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+AN e-learning platform designed to make education more assible, flexible and engaging.
 
 ## Project setup
 
@@ -58,42 +36,122 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Deployment
+## API endpoints
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+### Register a user
+**POST** `/auth/signup`
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g mau
-$ mau deploy
+**Request Body**
+```json
+{
+	"username": "daniel123",
+	"email": "daniel.ochigbo@gmail.com",
+	"password": "NGNdaniel0&"
+}
+```
+**Response**
+```json
+{
+	"message": "User successfully created"
+}
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Login User
+**POST**  ``user/login``
+**Request**
+```json
+{
+	"username": "daniel123",
+	"password": "NGNdaniel0&"
+}
+```
+**Request**
+```json
+{
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiZGFuaWVsLm9jaGlnYm9AbXRuLmNvbSIsImlhdCI6MTc0ODE4MjI5NywiZXhwIjoxNzQ4MTg1ODk3fQ.CpvNG0un47PDyN3z_LLp1m3sg5e9h1AH7_WUHjToyfI",
+	"refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTc0ODE4MjI5NywiZXhwIjoxNzQ4MjY4Njk3fQ.0rhNHcA5AdO5vJLA_ZG2n74ZGJg8AZih9wLWDRQWMhU"
+}
+```
 
-## Resources
+### Get user profile
+**PATCH**  ``/users/profile``
+**Response**
+```json
+{
+	"id": 1,
+	"fullname": null,
+	"bio": null,
+	"image": null,
+	"gender": null,
+	"dob": null,
+	"updatedAt": "2025-05-24T15:44:53.153Z"
+}
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+### Update user profile
+**PATCH**  ``/users/profile``
+**Request**
+```json
+{
+	"fullname": "Daniel Moses",
+	"gender": "Male"
+}
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+**Responds**
+```json
+{
+	"id": 1,
+	"fullname": "Daniel Moses",
+	"bio": null,
+	"image": null,
+	"gender": "MALE",
+	"dob": null,
+	"updatedAt": "2025-05-27T10:51:30.528Z"
+}
+```
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Get all courses recommendation for user based on their tracks
+**GET**  ``/users/courses``
+**Response**
+```json
+[
+	{
+		"id": 1,
+		"title": "Introduction to backend",
+		"duration": 60,
+		"objectives": [
+			"understand backend"
+		],
+		"track": [
+			{
+				"name": "frontend"
+			}
+		],
+		"createdAt": "2025-05-24T15:44:05.343Z",
+		"submitedAt": "2025-05-24T15:44:05.343Z"
+	}
+]
+```
 
-## Stay in touch
+### Update user Track
+**PATCH**  ``/users/track``
+**Request**
+```json
+{
+	"tracks": ["backend", "frontend"]
+}
+```
+**Response**
+```json
+{
+	"message": "User track updated successfully",
+	"tracks": [
+		"frontend",
+		"backend"
+	]
+}
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
